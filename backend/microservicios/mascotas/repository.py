@@ -121,7 +121,7 @@ def create_pet(data):
                 foto_url
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """,
+            RETURNING id
             (
                 refugio_id,
                 nombre,
@@ -134,16 +134,16 @@ def create_pet(data):
                 descripcion,
                 personalidad,
                 nivel_energia,
-                int(compatible_ninos),
-                int(compatible_mascotas),
-                int(vacunado),
-                int(desparasitado),
-                int(esterilizado),
+                bool(compatible_ninos),
+                bool(compatible_mascotas),
+                bool(vacunado),
+                bool(desparasitado),
+                bool(esterilizado),
                 estado,
                 foto_url,
             ),
         )
-        return cursor.lastrowid
+        return cursor.fetchone()["id"]
 
 
 def update_pet(pet_id, data):
