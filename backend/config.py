@@ -1,3 +1,11 @@
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Cargar .env desde el directorio de backend
+base_dir = Path(__file__).resolve().parent
+dotenv_path = base_dir / ".env"
+load_dotenv(dotenv_path)
 
 class Config:
     DB_HOST = os.getenv("DB_HOST", "localhost")
