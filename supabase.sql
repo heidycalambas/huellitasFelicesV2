@@ -35,7 +35,8 @@ CREATE TABLE usuarios (
     preferencia_tipo VARCHAR(20),
     preferencia_tamano VARCHAR(30),
     preferencia_edad VARCHAR(30),
-    rol VARCHAR(30) DEFAULT 'adoptante'
+    rol VARCHAR(30) DEFAULT 'adoptante',
+    activo BOOLEAN DEFAULT TRUE
 );
 
 -- =====================================================
@@ -50,7 +51,8 @@ CREATE TABLE refugios (
     ciudad VARCHAR(100) NOT NULL,
     direccion VARCHAR(200),
     telefono VARCHAR(30),
-    email VARCHAR(100)
+    email VARCHAR(100),
+    usuario_id INTEGER REFERENCES usuarios(id)
 );
 
 -- =====================================================
@@ -78,6 +80,7 @@ CREATE TABLE mascotas (
     desparasitado BOOLEAN DEFAULT FALSE,
     esterilizado BOOLEAN DEFAULT FALSE,
     estado VARCHAR(30) DEFAULT 'Disponible',
+    foto_url TEXT,
 
     CONSTRAINT fk_mascotas_refugios
         FOREIGN KEY (refugio_id)
