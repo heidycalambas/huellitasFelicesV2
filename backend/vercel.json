@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    },
+    {
+      "src": "backend/app.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "10mb" }
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "backend/app.py" },
+    { "src": "/uploads/(.*)", "dest": "backend/app.py" },
+    { "src": "/(.*)", "dest": "frontend/$1" }
+  ],
+  "env": {
+    "DB_HOST": "YOUR_SUPABASE_HOST",
+    "DB_PORT": "5432",
+    "DB_USER": "postgres",
+    "DB_PASSWORD": "YOUR_SUPABASE_PASSWORD",
+    "DB_NAME": "postgres",
+    "DB_SSLMODE": "require",
+    "JWT_SECRET": "RANDOM_STRING",
+    "API_KEY": "RANDOM_STRING",
+    "SUPABASE_URL": "https://szedavhyzlegmrubiebf.supabase.co",
+    "SUPABASE_KEY": "sb_secret_68I0l5wPtDSjC_l0CCqDeQ__cSmr2sp"
+  }
+}
