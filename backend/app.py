@@ -153,6 +153,7 @@ def register():
             if cursor.fetchone():
                 return jsonify({"error": "El nombre de usuario ya se encuentra registrado"}), 409
 
+            
             cursor.execute(
                 """
                 INSERT INTO usuarios (
@@ -160,7 +161,11 @@ def register():
                     tiene_patio, otras_mascotas, tiempo_disponible, experiencia,
                     preferencia_tipo, preferencia_tamano, preferencia_edad, rol, activo
                 )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'adoptante', 1)
+                VALUES (
+                    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                    %s, %s, %s, 'adoptante', TRUE
+                )
+                RETURNING id
                 """,
                 (
                     nombre,
@@ -178,7 +183,9 @@ def register():
                     preferencia_edad,
                 ),
             )
-            nuevo_id = cursor.lastrowid
+
+            nuevo_id = cursor.fetchone()["id"]
+
             cursor.execute(
                 """
                 SELECT id, nombre, usuario, rol, ciudad, tipo_vivienda, tiene_patio,
